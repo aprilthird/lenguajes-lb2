@@ -12,7 +12,7 @@ namespace LENGUAJES.LB2
         static void Main(string[] args)
         {
             Console.SetWindowSize(200, 50);
-            //RunMenu();
+            Console.ForegroundColor = ConsoleColor.White;
             Run();
             Console.Clear();
         }
@@ -45,14 +45,15 @@ namespace LENGUAJES.LB2
         {
             Console.Write(">");
             var exit = false;
+            Console.ForegroundColor = ConsoleColor.Green;
             var str = Console.ReadLine();
+            Console.ForegroundColor = ConsoleColor.White;
 
             if (string.IsNullOrEmpty(str))
             {
                 Console.WriteLine("invalid command...");
                 Eval();
             }
-
             var commandStr = str.Split(" ");
             if(!commandStr.Any())
             {
@@ -63,15 +64,31 @@ namespace LENGUAJES.LB2
             switch (commandStr[0])
             {
                 case "drive":
-                    if (commandStr.Count() == 0)
+                    if (commandStr.Count() == 1)
+                    {
                         Console.WriteLine("you must write \"distance\" param");
-                    var distance = Int32.Parse(commandStr[1]);
+                        break;
+                    }
+                    if(string.IsNullOrEmpty(commandStr[1]))
+                    {
+                        Console.WriteLine("you must write \"distance\" param");
+                        break;
+                    }
+                    int.TryParse(commandStr[1], out int distance);
                     bus.Drive(distance);
                     break;
                 case "refill":
-                    if (commandStr.Count() == 0)
+                    if (commandStr.Count() == 1)
+                    {
                         Console.WriteLine("you must write \"quantity\" param");
-                    var load = Convert.ToDouble(commandStr[1]);
+                        break;
+                    }
+                    if (string.IsNullOrEmpty(commandStr[1]))
+                    {
+                        Console.WriteLine("you must write \"quantity\" param");
+                        break;
+                    }
+                    double.TryParse(commandStr[1], out double load);
                     bus.Refuel(load);
                     break;
                 case "businfo":
